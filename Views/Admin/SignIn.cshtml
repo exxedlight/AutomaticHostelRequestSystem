@@ -1,0 +1,19 @@
+﻿@model SignInViewModel
+@{
+    ViewData["Title"] = "Вхід";
+}
+
+<link rel="stylesheet" href="/css/SignIn.css" />
+
+<form asp-action="Enter" asp-controller="Admin" method="post">
+    <div class="wrapper">
+        <h3>Вхід</h3>
+        @if(Model.form_message != null)
+        {
+            <p style="color: red; text-align: right; width: 70%; text-decoration: underline;">@Model.form_message</p>
+        }
+        <input type="text" placeholder="Логін" autocomplete="off" name="login" required />
+        <input type="password" placeholder="Пароль" autocomplete="off" name="password" required />
+        <button type="submit"><p>Увійти</p></button>
+    </div>
+</form>

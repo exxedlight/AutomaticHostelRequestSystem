@@ -1,0 +1,125 @@
+﻿@using HostelRequest.DB.Entityes
+@model NewOrderViewModel
+@{
+    ViewData["Title"] = "Заява";
+}
+
+<link rel="stylesheet" href="/css/Home.css" />
+
+<form method="post" asp-action="pushNewOrder" asp-controller="Home">
+    <div class="wrapper">
+        <div class="student-info">
+            <h4>Інформація про студента</h4>
+            <br />
+
+            <input type="text" placeholder="ПІБ" required name="PIB" autocomplete="off" />
+            <input type="text" placeholder="Група" required name="group" autocomplete="off" />
+            <input type="text" placeholder="Факультет" required name="facult" autocomplete="off" />
+
+            <button type="submit"><p>Відправити заяву</p></button>
+
+            @if(Model.pushed_message != null)
+            {
+                <p style="color: green">@Model.pushed_message</p>
+            }
+        </div>
+
+        <div class="other-info">
+            <h4>Місце поселення</h4>
+            <br />
+
+            <h5>Гуртожиток</h5>
+            <select name="hostel_id" id="hostelSelect" required>
+                @foreach (HostelEntity hostel in Model.hostels)
+                {
+                    <option value="@hostel.Id">@hostel.Number: @hostel.Adres</option>
+                }
+            </select>
+            <div class="hostel-info">
+                <p id="hostelAddress">Адреса</p>
+                <p id="hostelFaculty">Факультет</p>
+                <p id="hostelPrice">Ціна за місяць</p>
+            </div>
+
+            <br />
+
+            <h5>Кімната</h5>
+            <select id="roomSelect" name="room_id" required>
+            </select>
+            <div class="hostel-info">
+                <p id="roomPlaces">Кількість місць</p>
+                <p id="roomSquare">Площа</p>
+                <p id="roomFloor">Поверх</p>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        function loadHostelDetails(hostelId) {
+            $.ajax({
+                url: '@Url.Action("HostelChanged", "Home")',
+                type: 'POST',
+                data: { hostel_id: hostelId },
+                success: function (data) {
+                    $('#hostelAddress').text('Адреса: ' + data.adres);
+                    $('#hostelFaculty').text('Факультет: ' + data.faculty);
+                    $('#hostelPrice').text('Ціна за місяць: ' + data.pricePerMonth);
+
+                    var roomSelect = $('#roomSelect');
+                    roomSelect.empty();
+                    $.each(data.rooms, function (index, room) {
+                        roomSelect.append($('<option>', {
+                            value: room.id,
+                            text: room.number
+                        }));
+                    });
+
+                    // Автоматически выбрать первую комнату и загрузить её данные
+                    if (data.rooms.length > 0) {
+                        loadRoomDetails(data.rooms[0].id);
+                    }
+                },
+                error: function () {
+                    console.log('Request(hostels) error');
+                }
+            });
+        }
+
+        function loadRoomDetails(roomId) {
+            $.ajax({
+                url: '@Url.Action("RoomChanged", "Home")',
+                type: 'POST',
+                data: { room_id: roomId },
+                success: function (data) {
+                    $('#roomPlaces').text('Кількість місць: ' + data.places);
+                    $('#roomSquare').text('Площа: ' + data.square);
+                    $('#roomFloor').text('Поверх: ' + data.floor);
+                },
+                error: function () {
+                    console.log('Request(rooms) error');
+                }
+            });
+        }
+
+        // Обработчик для изменения общежития
+        $('#hostelSelect').on('change', function () {
+            var hostelId = $(this).val();
+            loadHostelDetails(hostelId);
+        });
+
+        // Обработчик для изменения комнаты
+        $('#roomSelect').on('change', function () {
+            var roomId = $(this).val();
+            loadRoomDetails(roomId);
+        });
+
+        // Инициализация данных при загрузке страницы
+        var initialHostelId = $('#hostelSelect').val();
+        if (initialHostelId) {
+            loadHostelDetails(initialHostelId);
+        }
+    });
+
+</script>

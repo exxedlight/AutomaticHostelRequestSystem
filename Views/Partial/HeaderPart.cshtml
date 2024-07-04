@@ -1,0 +1,15 @@
+﻿<header>
+    <h3><a href="@Url.Action("Index", "Home")">Система електронних заяв</a></h3>
+
+    @if (!string.IsNullOrEmpty(Context.Request.Cookies["user"]))
+    {   //  увійти з перевіркою кукі
+        <div class="adm-buttons">
+            <a href="@Url.Action("CheckAdmin", "Admin")">Адміністратор</a>
+            <a href="@Url.Action("Leave", "Admin")">Вийти</a>
+        </div>
+    }
+    else
+    {   //  сторінка входу
+        <a href="@Url.Action("SignIn", "Admin")">Адміністратор</a>
+    }
+</header>

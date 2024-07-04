@@ -1,0 +1,42 @@
+﻿header{
+    background: rgb(11, 112, 103);
+    border-bottom: 3px solid black;
+    min-height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 0 20px;
+}
+header h3{
+    line-height: 100%;
+    text-align: center;
+    color: black;
+}
+header h3 a{
+    border: none;
+    cursor: pointer;
+    color: rgb(0,0,0,.8);
+}
+header h3 a:hover{
+    background: transparent;
+}
+
+header a{
+    text-align: center;
+    width: 200px;
+    color: white;
+    text-decoration: none;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+header a:hover{
+    color: white;
+    background: rgb(0,0,0,.3);
+}
+
+header .adm-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

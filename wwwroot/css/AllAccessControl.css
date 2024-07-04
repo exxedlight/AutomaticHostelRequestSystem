@@ -1,0 +1,82 @@
+﻿.wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.hostels {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    border-right: 1px solid black;
+}
+.admins {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    border-left: 1px solid black;
+}
+.admins-list{
+    width: 100%;
+    min-height: 400px;
+    max-height: 400px;
+    overflow-y: scroll;
+    border: 1px solid rgba(0,0,0,.4);
+    padding: 5px;
+    box-sizing: border-box;
+}
+.admins-list form{
+    border: 1px solid black;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.admins-list form p{
+    margin-bottom: 5px;
+}
+.admins-list form button{
+    width: 50%;
+    background: transparent;
+    border-radius: 10px;
+    padding: 0;
+    margin: 0;
+    align-self: flex-end;
+}
+.admins-list form button:hover{
+    background: rgba(0,0,0,.2);
+}
+
+.add-admin-form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.add-admin-form input{
+    margin-bottom: 5px;
+}
+.add-admin-form select{
+    margin-bottom: 10px;
+}
+    .add-admin-form button {
+        width: 100%;
+        background: transparent;
+        border-radius: 10px;
+        padding: 0;
+        margin: 0;
+        align-self: flex-end;
+        font-size: larger;
+    }
+        .add-admin-form button:hover {
+            background: rgba(0,0,0,.2);
+        }
+.add-admin-form p {
+    margin: 5px;
+}

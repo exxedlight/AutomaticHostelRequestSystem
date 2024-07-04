@@ -1,0 +1,73 @@
+﻿@using HostelRequest.DB.Entityes
+@using HostelRequest.Models
+@model SingleAdminViewModel
+@{
+    ViewData["Title"] = $"Гуртожиток: {Model.currentHostel.Number}";
+}
+
+<link rel="stylesheet" href="/css//AllAccessControl.css" />
+
+<h1>Гуртожиток @Model.currentHostel.Number</h1>
+<h4>Адреса: @Model.currentHostel.Adres</h4>
+
+<div class="wrapper">
+
+    <div class="hostels" style="border-top: 2px solid black;">
+        <h3>Заяви</h3>
+        <br />
+        <h4>Список</h4>
+        <div class="admins-list">
+            @foreach (OrderView order in Model.orders)
+            {
+                <form asp-action="OrderAcceptReject" asp-controller="Admin" method="post"
+                      style="background: @(order.Accepted == null ? "Transparent" : (order.Accepted.Value ? "rgba(0,255,0,.3)" : "rgba(255,0,0,.3)"));">
+
+                    <input type="hidden" value="@order.Id" name="order_id" />
+
+                    <p style="font-weight: bold;">Від: @order.student_info.PIB</p>
+                    <p>З факультету: @order.student_info.Facultet</p>
+                    <p>Групи: @order.student_info.Group</p>
+                    <p>У кімнату: @order.room_info.Number</p>
+
+                    <button type="submit" name="action" value="accept"><p>Прийняти</p></button>
+                    <button type="submit" name="action" value="reject"><p>Відхилити</p></button>
+                </form>
+            }
+        </div>
+    </div>
+
+    <div class="admins" style="border-top: 2px solid black;">
+        <h3>Адміністрування</h3>
+        <br />
+        <h4>Кімнати</h4>
+        <div class="admins-list">
+            @foreach (RoomEntity room in Model.rooms)
+            {
+                <form asp-action="RemoveRoom" asp-controller="Admin" method="post">
+                    <input type="hidden" value="@room.Id" name="room_id" />
+                    <p style="font-weight: bold;">Номер: @room.Number</p>
+                    <p>Поверх: @room.Floor</p>
+                    <p>Площа: @room.Square</p>
+                    <p>Місць: @room.Places</p>
+                    <button type="submit"><p>Видалити</p></button>
+                </form>
+            }
+        </div>
+        <h4>Додати кімнату</h4>
+        <form class="add-admin-form" method="post" asp-action="AddNewRoom" asp-controller="Admin">
+            @if (Model.on_new_room_err != null)
+            {
+            <p style="width: 100%; text-align: right; color: red;">@Model.on_new_room_err</p>
+            }
+
+            <input type="hidden" value="@Model.currentHostel.Id" name="hostel_id" />
+            <input placeholder="Номер" type="number" min="0" required name="number" autocomplete="off" />
+            <input placeholder="Поверх" type="number" min="0" required name="floor" autocomplete="off" />
+            <input placeholder="Площа" type="number" min="0" required name="square" autocomplete="off" />
+            <input placeholder="Кількість місць" type="number" min="0" required name="places" autocomplete="off" />
+
+            <button type="submit"><p>Створити</p></button>
+        </form>
+    </div>
+
+</div>

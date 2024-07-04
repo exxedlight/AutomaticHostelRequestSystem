@@ -1,0 +1,76 @@
+﻿@using HostelRequest.DB.Entityes
+@model AllAccessViewModel
+@{
+    ViewData["Title"] = "Управління";
+}
+
+<link rel="stylesheet" href="/css//AllAccessControl.css" />
+
+<div class="wrapper">
+
+    <div class="hostels">
+        <h3>Гуртожитки</h3>
+        <br />
+        <div class="admins-list">
+            @foreach (HostelEntity hostel in Model.hostels)
+            {
+                <form asp-action="RemoveHostel" asp-controller="Admin" method="post">
+                    <input type="hidden" value="@hostel.Id" name="hostel_del_id" />
+                    <p style="font-weight: bold;">Гуртожиток #@hostel.Number</p>
+                    <p>Адреса: @hostel.Adres</p>
+                    <button type="submit"><p>Видалити</p></button>
+                </form>
+            }
+        </div>
+        <br />
+        <h4>Додати гуртожиток</h4>
+        <form class="add-admin-form" asp-action="AddHostel" asp-controller="Admin" method="post">
+            @if (Model.hostel_err != null)
+            {
+                <p style="width: 100%; text-align: right; color: red;">@Model.hostel_err</p>
+            }
+            <input placeholder="Номер" type="number" min="1" required autocomplete="off" name="hostel_number" />
+            <input placeholder="Адреса" type="text" required autocomplete="off" name="hostel_adres" />
+            <input placeholder="Факультет" type="text" required autocomplete="off" name="hostel_facult" />
+            <input placeholder="Ціна за місяць" type="number" min="0" required autocomplete="off" name="hostel_price" />
+            <button type="submit"><p>Створити</p></button>
+        </form>
+
+    </div>
+
+
+    <div class="admins">
+        <h3>Адміністратори</h3>
+        <br />
+        <div class="admins-list">
+            @foreach (AdminEntity admin in Model.admins)
+            {
+                <form asp-action="RemoveAdmin" asp-controller="Admin" method="post">
+                    <input type="hidden" value="@admin.Id" name="adm_del_id" />
+                    <p style="font-weight: bold;">Адміністратор: @admin.login</p>
+                    <p>Гуртожиток: @Model.hostels.First(x => x.Id == admin.hostelId).Number</p>
+                    <button type="submit"><p>Видалити</p></button>
+                </form>
+            }
+        </div>
+        <br />
+        <h4>Додати адміністратора</h4>
+        <form class="add-admin-form" asp-action="AddAdmin" asp-controller="Admin" method="post">
+            @if (Model.adm_err != null)
+            {
+                <p style="width: 100%; text-align: right; color: red;">@Model.adm_err</p>
+            }
+            <input placeholder="Логін" type="text" required name="adm_login" autocomplete="off" />
+            <input placeholder="Пароль" type="text" required name="adm_password" autocomplete="off" />
+            <select required name="adm_hostel_id">
+                @foreach(HostelEntity hostel in Model.hostels)
+                {
+                    <option value="@hostel.Id">@hostel.Number: @hostel.Adres</option>
+                }
+            </select>
+            <button type="submit"><p>Створити</p></button>
+        </form>
+
+    </div>
+
+</div>

@@ -1,0 +1,65 @@
+﻿.wrapper{
+    width: 100%;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.student-info{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-right: 2px solid black;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-right: 10px;
+}
+.student-info h4{
+    width: 100%;
+    text-align: center;
+}
+.other-info h4 {
+    width: 100%;
+    text-align: center;
+}
+.student-info button {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    height: 50px;
+    border-radius: 15px;
+    background: rgba(11, 112, 103, .7);
+}
+.student-info button:hover{
+    background: rgb(101, 187, 87);
+}
+.student-info button p{
+    line-height: 50px;
+    height: 100%;
+    width: 100%;
+    font-size: 17px;
+    font-weight: bold;
+}
+.student-info input{
+    border-radius: 5%;
+    margin-bottom: 5px;
+    text-align: center;
+    font-size: large;
+}
+
+.other-info {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 10px;
+    box-sizing: border-box;
+}
+    .other-info .hostel-info{
+        color: rgb(60, 60, 60);
+        margin-top: 10px;
+        border: 2px solid black;
+        border-radius: 5%;
+        padding: 5px;
+        box-sizing: border-box;
+    }
